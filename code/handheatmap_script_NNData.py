@@ -256,10 +256,10 @@ def main():
     thresh_flag = 0
     ###################### UPDATE FRAMERATE ###########################
     experiment = '2'    # '1','2'
-    participant = '3'   # '1','2','3','4'
+    participant = '4'   # '1','2','3','4'
     camera = '2'    # '1','2','3','4'
-    participant_file = 'May22(2).json'  # May21(3), May21(4), May21(Morning)(1), May21(Morning)(2), May22(2), May23(2)
-    video_start_time = '2018-05-22 12:51:23-05'
+    participant_file = 'May23(2).json'  # May21(3), May21(4), May21(Morning)(1), May21(Morning)(2), May22(2), May23(2)
+    video_start_time = '2018-05-23 09:47:33-05'
         ### E2 P1 Start Times: ###
         # Camera 1: 2018-05-21 09:25:45
         # Camera 2: 2018-05-21 09:26:12
