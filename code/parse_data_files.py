@@ -22,6 +22,7 @@ for f in files:
 
     # cycle through data types
     data_types = ['AppleWatch_Right', 'AppleWatch_Left', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY']
+    # data_types = ['C2_PatientSpace', 'C2_RawXY']
     for dt in data_types:
         data_files = glob.glob(project + 'raw-data/' + experiment + '_' + participant + '_' + dt + '*.csv')
 
@@ -55,11 +56,11 @@ for f in files:
                     data = data.rename(columns={'Timestamp': 'time'})
                     device = 'Myo'
                     dtype = str(dt.split('_')[1])
-                if dt in ['PatientSpace', 'RawXY']:
+                if dt in ['C2_PatientSpace', 'C2_RawXY']:
                     data = data.rename(columns={'Timestamp': 'time'})
                     device = 'Camera'
-                    side = int(file[-1].split('_')[2].split('-')[0][1])
-                    dtype = str(dt)
+                    side = int(dt.split('_')[0][1])
+                    dtype = str(dt.split('_')[1])
 
                 # grab data just from this event
                 event_df = data.loc[(data['time'] >= start_time) & (data['time'] <= end_time)]
@@ -100,7 +101,6 @@ for f in files:
                             event_df = event_df.rename(columns={' Arm': 'Arm', ' EMG_1': 'EMG_1', ' EMG_2': 'EMG_2', \
                                 ' EMG_3': 'EMG_3', ' EMG_4': 'EMG_4', ' EMG_5': 'EMG_5', ' EMG_6': 'EMG_6', \
                                 ' EMG_7': 'EMG_7', ' EMG_8': 'EMG_8'})
-
                     if dt == 'Myo_IMU':
                         try:
                             try:
@@ -128,6 +128,8 @@ for f in files:
                                 ' Orientation_X': 'Orientation_X', ' Orientation_Y': 'Orientation_Y', ' Orientation_Z': 'Orientation_Z', \
                                 ' Acc_X': 'Acc_X', ' Acc_Y': 'Acc_Y', ' Acc_Z': 'Acc_Z', ' Gyro_X': 'Gyro_X', ' Gyro_Y': 'Gyro_Y', \
                                 ' Gyro_Z': 'Gyro_Z', ' RSSI': 'RSSI', ' Roll': 'Roll', ' Pitch': 'Pitch', ' Yaw ': 'Yaw'})
+                    if dt in ['C2_PatientSpace', 'C2_RawXY']:
+                        event_df = event_df.drop(columns=['Frame'])
 
 
 
@@ -178,5 +180,5 @@ for f in files:
                     else:
                         # write data to csv files
                         file_name = directory + '/' + procedure.replace(' ', '') + '_' + experiment + '_' + participant + '_T' + \
-                            str(trial_number) + '_' + device + '_' + side + '_' + dtype + '.csv'
+                            str(trial_number) + '_' + device + '_' + str(side) + '_' + dtype + '.csv'
                         event_df.to_csv(path_or_buf=file_name, sep=',', header=True)

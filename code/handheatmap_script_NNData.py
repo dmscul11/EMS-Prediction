@@ -297,7 +297,7 @@ def main():
             'RH Dist Left Wrist','RH Dist Right Hip','RH Dist Right Knee','RH Dist Right Ankle','RH Dist Left Hip','RH Dist Left Knee','RH Dist Left Ankle', \
             'RH Dist Right Eye','RH Dist Left Eye','RH Dist Right Ear','RH Dist Left Ear']
     f = open('/Users/deirdre/Documents/DODProject/CELA-Data/heatmaps/heatmaps/' + 'Experiment_' \
-            + experiment + '/' + 'p' + participant + '_C' + camera + '-PatientSpace.csv', 'w')
+            + experiment + '/' + 'p' + participant + '_C' + camera + '_PatientSpace.csv', 'w')
     writer_ld = csv.writer(f)
     writer_ld.writerow(headers1)
 
@@ -315,7 +315,7 @@ def main():
             'Medic Y Left Wrist','Medic Y Right Hip','Medic Y Right Knee','Medic Y Right Ankle','Medic Y Left Hip','Medic Y Left Knee','Medic Y Left Ankle', \
             'Medic Y Right Eye','Medic Y Left Eye','Medic Y Right Ear','Medic Y Left Ear']
     f = open('/Users/deirdre/Documents/DODProject/CELA-Data/heatmaps/heatmaps/' + 'Experiment_' \
-            + experiment + '/' + 'p' + participant + '_C' + camera + '-RawXY.csv', 'w')
+            + experiment + '/' + 'p' + participant + '_C' + camera + '_RawXY.csv', 'w')
     writer_xy = csv.writer(f)
     writer_xy.writerow(headers2)
 
