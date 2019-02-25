@@ -11,3 +11,10 @@ Code:
 - analyze-watchdata-separate-events.py = generate basic plots of apple watch data
 - limbs_randomforest.py = run random forest predictor on openpose data
 - parse_data_files.py = preprocess and split data into csvs by procedure and data collection
+- read_processed_data.py = Main function to read in processed data and run ML random forest
+
+Event-Files:
+- events csv files for data
+
+Related Works:
+- similar works PDFs to implement
