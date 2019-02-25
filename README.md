@@ -12,6 +12,7 @@ Code:
 - limbs_randomforest.py = run random forest predictor on openpose data
 - parse_data_files.py = preprocess and split data into csvs by procedure and data collection
 - read_processed_data.py = Main function to read in processed data and run ML random forest
+- visualizations.py = Main function to read in ML output and create visualizations**************
 
 Event-Files:
 - events csv files for data

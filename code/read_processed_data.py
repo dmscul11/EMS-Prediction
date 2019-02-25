@@ -15,6 +15,7 @@ from sklearn.metrics import classification_report
 from sklearn.model_selection import KFold, cross_val_score, cross_val_predict
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.decomposition import PCA
 
 
 # count occaurances of events
@@ -155,7 +156,22 @@ def cross_validation(fit_rf, training_set, class_set):
 
 def visualize(data, x_train, y_train, x_test, y_test, scores):
 
-    print(scores)
+    # run pca on data
+    xdata = data.iloc[:, 10:data.shape[1] + 1]
+    pca = PCA(n_components=1)
+    principalComponents = pca.fit_transform(xdata)
+    principalDf = pd.DataFrame(data=principalComponents, columns=['principal component 1'])
+
+    # write out new dataframe
+    pca_data = data.iloc[:, 0:10]
+    pca_data['pca 1'] = principalDf
+    pca_data['predicted'] = scores
+    data['predicted'] = scores
+    print(scores.shape)
+    print(pca_data.shape)
+    print(pca_data.columns)
+    pca_data.to_csv('PCA.csv', sep=',', header=True, index=True)
+    data.to_csv('AllData.csv', sep=',', header=True, index=True)
 
 
 # main function
@@ -173,6 +189,7 @@ def main():
     events = count_events(project, trials_threshold)
     data = read_in(project, events, use_data)
     data = remove_samples(data)
+
     x_train, y_train, x_test, y_test = preprocess_data(data, norm)
 
     # RUN REGRESSION
@@ -202,9 +219,7 @@ def main():
 
         # run cross validation
         scores = cross_validation(fit_rf, np.vstack((x_train, x_test)), \
-            np.vstack((y_train[:, None], y_test[:, None]).ravel()))
-        print(scores)
-        print(scores.shape)
+            np.vstack((y_train[:, None], y_test[:, None])).ravel())
 
     # create visualizations
     visualize(data, x_train, y_train, x_test, y_test, scores)
