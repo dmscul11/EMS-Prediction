@@ -1,11 +1,11 @@
 
 import numpy as np
 import pandas as pd
-from bokeh.io import show
+from bokeh.io import show, output_file
 from bokeh.layouts import column
 from bokeh.models import ColumnDataSource, RangeTool, Legend
 from bokeh.plotting import figure, output_file
-from bokeh.palettes import Category20
+from bokeh.palettes import Category20, GnBu3, OrRd3
 
 
 # convert events to numerical
@@ -27,20 +27,52 @@ def convert_events(pca):
 
 # count correctly predicted
 def count_predicted(pca):
-    print(pca.shape)
-    breaking
+
+    # sum up correctly predicted
+    predicted = {}
+    predicted['Incorrectly'] = []
+    predicted['Correctly'] = []
+    procedures = [0] * len(np.unique(pca['Procedure']))
+    for i, e in enumerate(np.unique(pca['Procedure Num'])):
+        idx = np.where(pca['Procedure Num'] == i)
+        correct = np.where(pca['Procedure'].iloc[idx[0]] == pca['predicted'].iloc[idx[0]])
+        incorrect = np.where(pca['Procedure'].iloc[idx[0]] != pca['predicted'].iloc[idx[0]])
+        procedure = pca['Procedure'].iloc[idx[0][0]]
+        procedures[e] = procedure
+        predicted['Correctly'].append(len(correct[0]))
+        predicted['Incorrectly'].append(len(incorrect[0]) * -1)
+
+        # find category inncorrect are
+        # incorrectly[procedure] = []
+        # for j, e2 in enumerate(np.unique(pca['Procedure Num'])):
+            # incorrect = np.where(pca['Predicted Num'].iloc[idx[0]] == e2)
+            # incorrectly[procedure].append(len(incorrect[0]) * -1)
+
+    predicted['procedures'] = procedures
+
+    return procedures, predicted
 
 
 # events prediction plot
-def categories_plot(pca):
-    print(pca)
+def categories_plot(procedures, predicted):
+
+    # create figure
+    p = figure(y_range=procedures, plot_height=400, x_range=(min(predicted['Incorrectly']), max(predicted['Correctly'])), \
+        title="Predictions", plot_width=1000, toolbar_location=None)
+    p.hbar(y=predicted['procedures'], right=predicted['Correctly'], height=0.9, color='Green', legend='Correct')
+    p.hbar(y=predicted['procedures'], right=predicted['Incorrectly'], height=0.9, color='Red', legend='Incorrect')
+
+    p.y_range.range_padding = 0.1
+    p.ygrid.grid_line_color = None
+    p.legend.location = "top_right"
+    p.axis.minor_tick_line_color = None
+    p.outline_line_color = None
+
+    return p
 
 
 # timeseries plot
 def timeseries_plot(pca):
-
-    print(pca.shape)
-    print(pca.columns)
 
     # create main plot
     secs = np.array(pca['seconds'], dtype=np.float)
@@ -95,16 +127,14 @@ def main():
     path = '/Users/deirdre/Documents/VA-ML/Project/EMS-Prediction/'
     data = pd.read_csv(path + 'data/' + 'AllData-RawXY.csv', header=0, sep=',', index_col=0)
     pca = pd.read_csv(path + 'data/' + 'PCA-RawXY.csv', header=0, sep=',', index_col=0)
-    print(data.shape)
-    print(data.columns)
 
     # make categories numerical
     pca = convert_events(pca)
 
     # plot data
     p1, select1 = timeseries_plot(pca)
-    predictions = count_predicted(pca)
-    p2 = categories_plot(predictions)
+    procedures, predicted = count_predicted(pca)
+    p2 = categories_plot(procedures, predicted)
 
     # output images
     output_file("timeseries.html", title="Timeseries PCA")
