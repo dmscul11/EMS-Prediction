@@ -21,8 +21,7 @@ for f in files:
     print('Participant ' + participant)
 
     # cycle through data types
-    data_types = ['AppleWatch_Right', 'AppleWatch_Left', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY']
-    # data_types = ['C2_PatientSpace', 'C2_RawXY']
+    data_types = ['AppleWatch_Right', 'AppleWatch_Left', 'Myo_EMG', 'Myo_IMU', 'C2_PatientSpace', 'C2_RawXY']
     for dt in data_types:
         data_files = glob.glob(project + 'raw-data/' + experiment + '_' + participant + '_' + dt + '*.csv')
 
@@ -36,7 +35,7 @@ for f in files:
                 data = pd.read_csv(df, header=0, sep=',', index_col=False, names=['id', 'session_id', \
                     'start_time', 'end_time', 'number_of_pts', 'frequency', 'vital', 'session_notes', \
                     'device_id', 'device_make_model', 'time', 'xacceleration', 'yacceleration', \
-                    'zacceleration', 'xrotation', 'yrotation', 'zrotation', 'yaw pitch', 'roll', 'session_id'])
+                    'zacceleration', 'xrotation', 'yrotation', 'zrotation', 'yaw', 'pitch', 'roll', 'session_id'])
 
             # cycle through events
             for index, row in events.iterrows():
@@ -131,16 +130,17 @@ for f in files:
                     if dt in ['C2_PatientSpace', 'C2_RawXY']:
                         event_df = event_df.drop(columns=['Frame'])
 
-
-
                     # add in time difference column
                     event_df.insert(0, 'seconds', '')
-                    event_df['time'] = event_df['time'].str[:-3]
+                    if dt in ['AppleWatch_Right', 'AppleWatch_Left']:
+                        event_df['time'] = event_df['time'].str[:-3]
+
                     try:
                         event_df['time'] = pd.to_datetime(event_df['time'], format="%Y-%m-%d %H:%M:%S.%f")
                     except:
                         event_df['time'] = pd.to_datetime(event_df['time'], format="%Y-%m-%d %H:%M:%S %f")
-                    event_df['seconds'] = (event_df['time'] - event_df['time'][0]) / np.timedelta64(1, 's')
+                    # event_df['seconds'] = (event_df['time'] - event_df['time'][0]) / np.timedelta64(1, 's')
+                    event_df['seconds'] = (event_df['time'] - event_df['time'][0]) / np.timedelta64(1, 'ms')
 
                     # add in additional information columns
                     event_df.insert(0, 'Data Type', dtype)
