@@ -141,7 +141,7 @@ def read_data(project, max_rows):
     data = []
     events = []
     for i, f in enumerate(files):
-        ######################### remove #########################
+        ######################### remove for testing #########################
         if i < 3:
             data_tmp = pd.read_csv(f, header=None, sep=',', index_col=False)
             event = f.split('/')[-1].split('_')[0]
@@ -158,6 +158,8 @@ def read_data(project, max_rows):
             else:
                 data = np.array(np.dstack((data, data_tmp)))
 
+    print(data.shape)
+
     return data, events
 
 
@@ -170,8 +172,6 @@ def main():
 
     # PREPROCESSING DATA ###
     data_combined, events_all = read_data(project, max_rows)
-    print(data_combined.shape)
-    print(len(events_all))
     x_train, y_train, x_test, y_test = preprocess_data(data_combined, events_all)    # normalize, randomize, split train/test
     print("\n Training and Test sizes:")
     print(x_train.shape)

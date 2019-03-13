@@ -337,10 +337,10 @@ def preprocess_data(data, events):
     # randomize data
     data = np.asarray(data, dtype=np.float32)
     labels = np.asarray(events)
-    rand_order = list(range(0, data.shape[0], 1))
+    rand_order = list(range(0, data.shape[2], 1))
     random.shuffle(rand_order)
-    data = data[rand_order, :, :]
-    labels = labels[rand_order, ]
+    data = data[:, :, rand_order]
+    labels = labels[rand_order]
 
     # scale data by subtract mean and divide by std
     data_mean = (data.mean(axis=0, keepdims=True)).mean(axis=1, keepdims=True)
@@ -348,7 +348,7 @@ def preprocess_data(data, events):
     data = (data - data_mean) / data_std
 
     # reshape data
-    data = data.reshape((-1, data.shape[1], data.shape[2], 1))
+    data = data.reshape((-1, data.shape[0], data.shape[1], 1))
 
     # randomize data into training and test
     train_ratio = int(0.8 * data.shape[0])
