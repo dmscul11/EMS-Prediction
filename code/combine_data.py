@@ -84,10 +84,12 @@ def read_in(project, events, use_data, use_exp, use_par, max_rows):
                         events_all.append(e)
 
                         # pad data with zeros so every sample has same size and save to csv
-                        np.savetxt(project + 'combined-data/' + e + '_' + exp + '_' + par + '_' + i + '_Combined.csv', \
-                            data, delimiter=',')
                         diff = max_rows - data.shape[0]
                         data = np.array(np.append(data, np.zeros((diff, data.shape[1])), axis=0))
+                        np.savetxt(project + 'combined-data/' + e + '_' + exp + '_' + par + '_' + i + '_Combined.csv', \
+                            data, delimiter=',')
+
+                        # combine data into one matrix
                         if data_all == []:
                             data_all = np.array(data)
                         else:
@@ -377,7 +379,7 @@ def main():
     events = count_events(project, trials_threshold, use_data, use_exp, use_par)     # use events above threshold
     data_combined, events_all = read_in(project, events, use_data, use_exp, use_par, max_rows)   # read in/combine data types into instances
     print(data_combined.shape)
-    print(events_all.shape)
+    print(len(events_all))
     x_train, y_train, x_test, y_test = preprocess_data(data_combined, events_all)    # normalize, randomize, split train/test
     print("\n Training and Test sizes:")
     print(x_train.shape)
