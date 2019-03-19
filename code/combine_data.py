@@ -88,6 +88,7 @@ def read_in(project, events, use_data, use_exp, use_par, max_rows):
                         data = np.array(np.append(data, np.zeros((diff, data.shape[1])), axis=0))
                         np.savetxt(project + 'combined-data/' + e + '_' + exp + '_' + par + '_' + i + '_Combined.csv', \
                             data, delimiter=',')
+                        print(data.shape)
 
                         # combine data into one matrix
                         if data_all == []:
@@ -192,7 +193,7 @@ def combine_data_types(use_data, data_list, sample):
                         tmp_data[t, data_combined.shape[1]:] = data_final[t, :]
                         if iterator < len(secs):
                             curr_diff = abs(tp - secs[iterator])
-                            if t + 1 < data_final.shape[0]:
+                            if t + 1 < len(curr_secs):
                                 next_diff = abs(curr_secs[t + 1] - secs[iterator])
                             else:
                                 next_diff = curr_diff + 10
@@ -220,7 +221,7 @@ def combine_data_types(use_data, data_list, sample):
                         tmp_data[t, 0:data_combined.shape[1]] = data_combined[t, :]
                         if iterator < len(curr_secs):
                             curr_diff = abs(tp - curr_secs[iterator])
-                            if t + 1 < data_combined.shape[0]:
+                            if t + 1 < len(secs):
                                 next_diff = abs(secs[t + 1] - curr_secs[iterator])
                             else:
                                 next_diff = curr_diff + 10
@@ -369,17 +370,20 @@ def main():
     # PARAMETERS TO CHANGE ###
     project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'    # path to main directory
     trials_threshold = 1   # min # of instances of event to include event in analysis
-    max_rows = 121274
+    max_rows = 121456
     # use any combination of data types but change exp/par: 'AppleWatch', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY'
     use_data = ['AppleWatch', 'EMG', 'IMU', 'PatientSpace', 'RawXY']
-    use_exp = ['E2']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
-    use_par = ['P3', 'P4']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
+    use_exp = ['E1']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
+    use_par = ['P2', 'P3', 'P4']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
 
-    # PREPROCESSING DATA ###
+    # IMPUTATE DATA ###
     events = count_events(project, trials_threshold, use_data, use_exp, use_par)     # use events above threshold
     data_combined, events_all = read_in(project, events, use_data, use_exp, use_par, max_rows)   # read in/combine data types into instances
     print(data_combined.shape)
     print(len(events_all))
+    breaking
+
+    # PREPROCESSING DATA ###
     x_train, y_train, x_test, y_test = preprocess_data(data_combined, events_all)    # normalize, randomize, split train/test
     print("\n Training and Test sizes:")
     print(x_train.shape)

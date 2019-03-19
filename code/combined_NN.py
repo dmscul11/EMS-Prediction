@@ -141,22 +141,22 @@ def read_data(project, max_rows):
     data = []
     events = []
     for i, f in enumerate(files):
-        ######################### remove for testing #########################
-        if i < 3:
-            data_tmp = pd.read_csv(f, header=None, sep=',', index_col=False)
-            event = f.split('/')[-1].split('_')[0]
-            events.append(event)
+        # remove for testing
+        # if i < 3:
+        data_tmp = pd.read_csv(f, header=None, sep=',', index_col=False)
+        event = f.split('/')[-1].split('_')[0]
+        events.append(event)
 
-            # pad to one size
-            if max_rows > 0:
-                diff = max_rows - data_tmp.shape[0]
-                data_tmp = np.array(np.append(data_tmp, np.zeros((diff, data_tmp.shape[1])), axis=0))
+        # pad to one size
+        if max_rows > 0:
+            diff = max_rows - data_tmp.shape[0]
+            data_tmp = np.array(np.append(data_tmp, np.zeros((diff, data_tmp.shape[1])), axis=0))
 
-            # combine data
-            if data == []:
-                data = np.array(data_tmp)
-            else:
-                data = np.array(np.dstack((data, data_tmp)))
+        # combine data
+        if data == []:
+            data = np.array(data_tmp)
+        else:
+            data = np.array(np.dstack((data, data_tmp)))
 
     print(data.shape)
 
