@@ -10,13 +10,13 @@ function plot_it()  {
 
 	// width, height, number of squares per bin column, number of bins
 	// var width = 2000, height = 1400;
-	var width = 3000, height = 1400;
+	var width = 4000, height = 1400;
 	d3.select('body').append('svg').attr('width', width).attr('height', height);
 	// var pad = 40;
-	var pad = 80;
+	var pad = 200;
 	var actual_width = width-2*pad, actual_height = height-2*pad;
 	// var squares_per_column = 14;
-	var squares_per_column = 30;
+	var squares_per_column = 85;
 	var n_bins = 10;
 
 	var cats = d3.set(predictions_data.map(d => d.gt)).values()

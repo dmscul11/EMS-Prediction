@@ -199,7 +199,7 @@ def classify(y_train, s_train, y_test, s_test, scores):
     probs = pd.DataFrame(columns=u_labels)
 
     # calc label, prediction, and probs for each full sample
-    for i in range(0, np.unique(real_samps)):
+    for i in range(0, len(np.unique(real_samps))):
         print(i)
         idx = np.where(real_samps == i)
         print(idx)
@@ -230,7 +230,6 @@ def classify(y_train, s_train, y_test, s_test, scores):
         probs.append(prob_tmp)
         print(acc)
         print(probs)
-        breaking
 
     # write to csv
     acc.to_csv('accuracy.csv', sep=',', header=True, index=False)
