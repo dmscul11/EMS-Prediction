@@ -19,7 +19,7 @@ from sklearn.decomposition import PCA
 
 
 # count occaurances of events
-def count_events(project, trials_threshold):
+def count_events(project, trials_threshold, use_data, use_exp, use_par):
 
     # get all event dirs
     dirs = glob.glob(project + 'processed-data/*')
@@ -27,11 +27,27 @@ def count_events(project, trials_threshold):
 
     # count number of files in each event dir
     for d in dirs:
+
+        # get all files in dir and event name
         files = glob.glob(d + '/*.csv')
         event = d.split('/')[-1]
-        if len(files) >= 25:
-            events[event] = len(files)
 
+        # only include files in count of the data type, exp, and par
+        file_list = []
+        for f in files:
+            file = f.split('/')[-1]
+            tmp = file.split('_')
+            exp = tmp[1]
+            par = tmp[2]
+
+            if (exp in use_exp) and (par in use_par) and (use_data[0] in file):
+                file_list.append(f)
+
+        # only include events if they are above threshold
+        if len(file_list) >= trials_threshold:
+            events[event] = len(file_list)
+
+    print(events)
     return events
 
 
@@ -65,42 +81,39 @@ def read_in(project, events, use_data):
     return watch_data
 
 
-# remove any experiemtns for specific samples from being processed
-def remove_samples(data):
-
-    # remove rows of specifc experiments, or events, or participants
-    return data
-
-
 # normalize data and split into training test sets
 def preprocess_data(data, norm):
 
     # randomize data
-    col = data.columns.get_loc("Procedure")
-    data = np.asarray(data)
-    labels = np.asarray(data[:, col])
-    rand_order = list(range(0, data.shape[0], 1))
+    samples = np.asarray(data['Sample #'])
+    labels = np.asarray(data['Procedure'])
+    data = np.asarray(data.iloc[:, 10:], dtype=np.float32)
+    rand_order = list(range(0, data.shape[0]))
     random.shuffle(rand_order)
     data = data[rand_order, :]
+    samples = samples[rand_order]
     labels = labels[rand_order]
 
     # scale data by subtract mean and divide by std
-    if norm == 1:
-        data_mean = data[:, 10:data.shape[1] + 1].mean(axis=0, keepdims=True)
-        data_std = np.std(data[:, 10:data.shape[1] + 1].astype(dtype=np.float64), axis=0, keepdims=True)
-        data[:, 10:data.shape[1] + 1] = (data[:, 10:data.shape[1] + 1] - data_mean) / data_std
+    if norm:
+        data_mean = (data.mean(axis=0, keepdims=True)).mean(axis=1, keepdims=True)
+        data_std = np.std(np.std(data, axis=0, keepdims=True), axis=1, keepdims=True)
+        data = (data - data_mean) / data_std
 
     # randomize data into training and test
     train_ratio = int(0.8 * data.shape[0])
     random.shuffle(rand_order)
     data = data[rand_order, :]
-    labels = labels[rand_order]
-    data_training = data[0:train_ratio, 10:data.shape[1] + 1]
-    data_test = data[train_ratio:data.shape[0], 10:data.shape[1] + 1]
-    labels_training = labels[0:train_ratio]
-    label_test = labels[train_ratio:data.shape[0]]
+    samples = samples[rand_order, ]
+    labels = labels[rand_order, ]
+    x_train = data[0:train_ratio, :]
+    x_test = data[train_ratio:data.shape[0], :]
+    s_train = samples[0:train_ratio, ]
+    s_test = samples[train_ratio:data.shape[0], ]
+    y_train = labels[0:train_ratio, ]
+    y_test = labels[train_ratio:data.shape[0], ]
 
-    return data_training, labels_training, data_test, label_test
+    return x_train, y_train, s_train, x_test, y_test, s_test
 
 
 def find_best_params(rand_numb, training_set, class_set, fit_rf):
@@ -177,27 +190,32 @@ def visualize(data, x_train, y_train, x_test, y_test, scores):
 # main function
 def main():
 
-    # parameters
-    testing = 0
-    norm = 0
-    trials_threshold = 25
+    # PARAMETERS TO CHANGE ###
+    project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'    # path to main directory
+    trials_threshold = 24   # min # of instances of event to include event in analysistesting = 0
+    norm = 1
     rand_numb = 13
-    # use_data = ['AppleWatch', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY']
-    use_data = ['RawXY']
-    project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'
+    testing = 1
 
-    events = count_events(project, trials_threshold)
+    # use any combination of data types but change exp/par: 'AppleWatch', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY'
+    use_data = ['AppleWatch']
+    use_exp = ['E1', 'E2', 'E3']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
+    use_par = ['P1', 'P2', 'P3', 'P4']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
+
+    # read in data ###
+    events = count_events(project, trials_threshold, use_data, use_exp, use_par)     # use events above threshold
     data = read_in(project, events, use_data)
-    data = remove_samples(data)
 
-    x_train, y_train, x_test, y_test = preprocess_data(data, norm)
-
-    # RUN REGRESSION
+    # normalize and split data
+    x_train, y_train, s_train, x_test, y_test, s_test = preprocess_data(data, norm)
     print("\n Training and Test sizes:")
+    print(x_train[0:3, :])
     print(x_train.shape)
     print(y_train.shape)
+    print(s_train.shape)
     print(x_test.shape)
     print(y_test.shape)
+    print(s_test.shape)
 
     # train fandom forest decision tree
     if testing == 1:
@@ -221,8 +239,8 @@ def main():
         scores = cross_validation(fit_rf, np.vstack((x_train, x_test)), \
             np.vstack((y_train[:, None], y_test[:, None])).ravel())
 
-    # create visualizations
-    visualize(data, x_train, y_train, x_test, y_test, scores)
+        # create visualizations
+        visualize(data, x_train, y_train, x_test, y_test, scores)
 
 
 main()
