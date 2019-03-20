@@ -9,6 +9,7 @@ import struct
 import math
 import random
 import time
+from collections import Counter
 from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
@@ -187,20 +188,69 @@ def visualize(data, x_train, y_train, x_test, y_test, scores):
     data.to_csv('AllData.csv', sep=',', header=True, index=True)
 
 
+# create classification csvs
+def classify(y_train, s_train, y_test, s_test, scores):
+
+    # combine data
+    real_labels = np.hstack((y_train, y_test))
+    real_samps = np.hstack((s_train, s_test))
+    u_labels = np.unique(real_labels)
+    acc = pd.DataFrame(columns=['labels', 'pred', 'prob'])
+    probs = pd.DataFrame(columns=u_labels)
+
+    # calc label, prediction, and probs for each full sample
+    for i in range(0, np.unique(real_samps)):
+        print(i)
+        idx = np.where(real_samps == i)
+        print(idx)
+        print(len(idx))
+        label = real_labels[idx][0]
+        print(real_labels[idx])
+        print(label)
+        c = Counter(scores[idx])
+        pred, count = c.most_common()[0]
+        print(scores[idx])
+        print(pred)
+        print(count)
+        prob = float(count / len(idx))
+        print(prob)
+        acc.append([label, pred, prob])
+
+        # for each possible label calc probabililty in sample
+        prob_tmp = []
+        for j in u_labels:
+            print('\n')
+            print(j)
+            jdx = np.where(scores[idx] == j)
+            print(jdx)
+            print(len(jdx))
+            tmp = float(len(jdx) / len(idx))
+            print(tmp)
+            prob_tmp.append(tmp)
+        probs.append(prob_tmp)
+        print(acc)
+        print(probs)
+        breaking
+
+    # write to csv
+    acc.to_csv('accuracy.csv', sep=',', header=True, index=False)
+    probs.to_csv('probabilities.csv', sep=',', header=True, index=False)
+
+
 # main function
 def main():
 
     # PARAMETERS TO CHANGE ###
     project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'    # path to main directory
-    trials_threshold = 24   # min # of instances of event to include event in analysistesting = 0
+    trials_threshold = 4     # 24   # min # of instances of event to include event in analysistesting = 0
     norm = 1
     rand_numb = 13
-    testing = 1
+    testing = 0
 
     # use any combination of data types but change exp/par: 'AppleWatch', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY'
     use_data = ['AppleWatch']
-    use_exp = ['E1', 'E2', 'E3']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
-    use_par = ['P1', 'P2', 'P3', 'P4']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
+    use_exp = ['E2']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
+    use_par = ['P4']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
 
     # read in data ###
     events = count_events(project, trials_threshold, use_data, use_exp, use_par)     # use events above threshold
@@ -209,7 +259,6 @@ def main():
     # normalize and split data
     x_train, y_train, s_train, x_test, y_test, s_test = preprocess_data(data, norm)
     print("\n Training and Test sizes:")
-    print(x_train[0:3, :])
     print(x_train.shape)
     print(y_train.shape)
     print(s_train.shape)
@@ -225,11 +274,12 @@ def main():
 
         # plot for optimal # of estimators
         find_best_estimators(x_train, y_train, fit_rf)
+        # {'bootstrap': True, 'criterion': 'gini', 'max_depth': 4, 'max_features': None}
 
     else:
         # set up final model
-        fit_rf = RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
-            max_depth=4, max_features='log2', max_leaf_nodes=None,
+        fit_rf = RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=4, max_features='auto', max_leaf_nodes=None,
             min_impurity_decrease=1e-07, min_samples_leaf=1,
             min_samples_split=2, min_weight_fraction_leaf=0.0,
             n_estimators=250, n_jobs=1, oob_score=False, random_state=rand_numb,
@@ -238,6 +288,9 @@ def main():
         # run cross validation
         scores = cross_validation(fit_rf, np.vstack((x_train, x_test)), \
             np.vstack((y_train[:, None], y_test[:, None])).ravel())
+
+        # create classifications output
+        classify(y_train, s_train, y_test, s_test, scores)
 
         # create visualizations
         visualize(data, x_train, y_train, x_test, y_test, scores)

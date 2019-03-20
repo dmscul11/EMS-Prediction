@@ -6,6 +6,7 @@ GitHub: https://github.com/dmscul11/EMS-Prediction
 Box for Data: https://vanderbilt.app.box.com/folder/66875332205
 
 Python Background Server for D3: python3 -m http.server
+http://0.0.0.0:8000/
 
 
 Main Code:
@@ -19,6 +20,9 @@ Run Once Code:
 - analyze-watchdata-separate-events.py = generate basic plots of apple watch data
 - limbs_randomforest.py = run random forest predictor on openpose data
 - parse_data_files.py = preprocess and split data into csvs by procedure and data collection
+
+squares-d3:
+- Squares D3 implementation
 
 Event-Files:
 - events csv files for data
