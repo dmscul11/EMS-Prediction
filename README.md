@@ -9,8 +9,15 @@ Python Background Server for D3: python3 -m http.server
 http://0.0.0.0:8000/
 
 
+tree-d3:
+- Tree D3 implementation
+
+squares-d3:
+- Squares D3 implementation
+
+
 Main Code:
-- read_processed_data.py = Main function to read in processed data and run ML random forest
+- ***read_processed_data.py = Main function to read in processed data and run ML random forest
 - combine_data.py = Main function to read in processed data, combine and preprocess data, and run Neural Network
 - combined_NN.py = Main function to read in processed combined data instead of creating first, and run CNN
 - visualizations.py = Main function to read in ML output and create visualizations**************
@@ -20,9 +27,6 @@ Run Once Code:
 - analyze-watchdata-separate-events.py = generate basic plots of apple watch data
 - limbs_randomforest.py = run random forest predictor on openpose data
 - parse_data_files.py = preprocess and split data into csvs by procedure and data collection
-
-squares-d3:
-- Squares D3 implementation
 
 Event-Files:
 - events csv files for data
