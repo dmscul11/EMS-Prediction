@@ -1,102 +1,71 @@
 
+# references
+# https://github.com/aymericdamien/TensorFlow-Examples
+# https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/convolutional_network_raw.ipynb
+# https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb
+
+from __future__ import division, print_function, absolute_import
 import numpy as np
+import matplotlib
+matplotlib.use("agg")
 import matplotlib.pyplot as plt
 import tensorflow as tf
+from tensorflow.contrib import rnn
 import pandas as pd
 import glob
-import math
 import random
+import time
 
 
-# Create the neural network
-def conv_net(x_dict, n_classes, dropout, reuse, is_training):
-    # Define a scope for reusing the variables
-    with tf.variable_scope('ConvNet', reuse=reuse):
-        # TF Estimator input is a dict, in case of multiple inputs
-        x = x_dict['images']
+# Create model
+def conv_net(x, dropout, num_classes):
+    # Reshape to match picture format [Height x Width]
+    # Tensor input become 3-D: [Batch Size, Height, Width]
+    x = tf.reshape(x, shape=[-1, height, width])
+    print(x.shape)
 
-        # regularization
-        # regularizer = tf.contrib.layers.l2_regularizer(scale=0.1)
-        regularizer = tf.contrib.layers.l1_regularizer(scale=0.001)
+    # conv 1 layer
+    # conv1 = tf.layers.conv1d(x, activation=tf.nn.relu, filters=1, kernel_size=width)
+    conv1 = tf.layers.conv1d(x, activation=tf.nn.relu, filters=2, kernel_size=3)
+    print(conv1.shape)
 
-        # Convolution Layer with 32 filters and a kernel size of 5
-        conv1 = tf.layers.conv2d(x, 32, 5, activation=tf.nn.relu, kernel_regularizer=regularizer)
-        # conv1 = tf.layers.conv2d(x, 32, 5, activation=tf.nn.relu)
-        # Max Pooling (down-sampling) with strides of 2 and kernel size of 2
-        conv1 = tf.layers.max_pooling2d(conv1, 2, 2)
-        # conv1 = tf.layers.average_pooling2d(conv1, 2, 2)
+    # 1-layer LSTM with n_hidden units.
+    # rnn_cell = rnn.BasicLSTMCell(width)
+    rnn_cell = rnn.BasicLSTMCell(5)
+    outputs, states = tf.nn.dynamic_rnn(rnn_cell, conv1, dtype=tf.float32)
+    print(outputs.shape)
 
-        # Convolution Layer with 64 filters and a kernel size of 3
-        # conv2 = tf.layers.conv2d(conv1, 64, 3, activation=tf.nn.relu)
-        # Max Pooling (down-sampling) with strides of 2 and kernel size of 2
-        # conv2 = tf.layers.max_pooling2d(conv2, 2, 2)
+    # Output layer, class prediction
+    out = tf.layers.dense(outputs, 1)
+    print(out.shape)
+    out1 = tf.layers.dense(tf.squeeze(out, axis=2), 1)
+    print(out1.shape)
+    out2 = tf.layers.dense(out1, num_classes)
+    print(out2.shape)    
 
-        # Convolution Layer with 64 filters and a kernel size of 3
-        # conv3 = tf.layers.conv2d(conv2, 64, 3, activation=tf.nn.relu)
-        # Max Pooling (down-sampling) with strides of 2 and kernel size of 2
-        # conv3 = tf.layers.max_pooling2d(conv3, 2, 2)
+    return out2
 
-        # Convolution Layer with 64 filters and a kernel size of 3
-        # conv4 = tf.layers.conv2d(conv3, 64, 1, activation=tf.nn.relu)
-        # Max Pooling (down-sampling) with strides of 2 and kernel size of 2
-        # conv4 = tf.layers.max_pooling2d(conv4, 2, 2)
+    # # Convolution Layer
+    # conv1 = conv2d(x, weights['wc1'], biases['bc1'])
+    # # Max Pooling (down-sampling)
+    # conv1 = maxpool2d(conv1, k=2)
 
-        # Flatten the data to a 1-D vector for the fully connected layer
-        fc1 = tf.contrib.layers.flatten(conv1)
+    # # Convolution Layer
+    # conv2 = conv2d(conv1, weights['wc2'], biases['bc2'])
+    # # Max Pooling (down-sampling)
+    # conv2 = maxpool2d(conv2, k=2)
 
-        # Fully connected layer (in tf contrib folder for now)
-        fc1 = tf.layers.dense(fc1, 1024)
-        # Apply Dropout (if is_training is False, dropout is not applied)
-        fc1 = tf.layers.dropout(fc1, rate=dropout, training=is_training)
+    # # Fully connected layer
+    # # Reshape conv2 output to fit fully connected layer input
+    # fc1 = tf.reshape(conv2, [-1, weights['wd1'].get_shape().as_list()[0]])
+    # fc1 = tf.add(tf.matmul(fc1, weights['wd1']), biases['bd1'])
+    # fc1 = tf.nn.relu(fc1)
+    # # Apply Dropout
+    # fc1 = tf.nn.dropout(fc1, dropout)
 
-        # Output layer, class prediction
-        out = tf.layers.dense(fc1, n_classes)
-
-    return out
-
-
-# Define the model function (following TF Estimator Template)
-def model_fn(features, labels, mode):
-    # Build the neural network
-    # Because Dropout have different behavior at training and prediction time, we
-    # need to create 2 distinct computation graphs that still share the same weights.
-    logits_train = conv_net(features, num_classes, dropout, reuse=False,
-                            is_training=True)
-    logits_test = conv_net(features, num_classes, dropout, reuse=True,
-                           is_training=False)
-
-    # Predictions
-    pred_classes = tf.argmax(logits_test, axis=1)
-    pred_probas = tf.nn.softmax(logits_test)
-
-    # If prediction mode, early return
-    if mode == tf.estimator.ModeKeys.PREDICT:
-        return tf.estimator.EstimatorSpec(mode, predictions=pred_classes)
-
-    # Define loss and optimizer
-    loss_op = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(
-        logits=logits_train, labels=tf.cast(labels, dtype=tf.int32)))
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    # optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate, momentum=0.9, \
-    #   use_locking=False, name='Momentum', use_nesterov=False)
-    # optimizer = tf.train.RMSPropOptimizer(learning_rate=learning_rate, decay=0.999, epsilon=1e-10, \
-    #   centered=False, momentum=0.9, use_locking=False, name='RMSProp')
-    train_op = optimizer.minimize(loss_op,
-                                  global_step=tf.train.get_global_step())
-
-    # Evaluate the accuracy of the model
-    acc_op = tf.metrics.accuracy(labels=labels, predictions=pred_classes)
-
-    # TF Estimators requires to return a EstimatorSpec, that specify
-    # the different ops for training, evaluating, ...
-    estim_specs = tf.estimator.EstimatorSpec(
-        mode=mode,
-        predictions=pred_classes,
-        loss=loss_op,
-        train_op=train_op,
-        eval_metric_ops={'accuracy': acc_op})
-
-    return estim_specs
+    # # Output, class prediction
+    # out = tf.add(tf.matmul(fc1, weights['out']), biases['out'])
+    # return out
 
 
 # normalize data and split into training test sets
@@ -142,7 +111,7 @@ def read_data(project, max_rows):
     events = []
     for i, f in enumerate(files):
         # remove for testing
-        # if i < 3:
+        # if i < 10:
         data_tmp = pd.read_csv(f, header=None, sep=',', index_col=False)
         event = f.split('/')[-1].split('_')[0]
         events.append(event)
@@ -158,7 +127,8 @@ def read_data(project, max_rows):
         else:
             data = np.array(np.dstack((data, data_tmp)))
 
-    print(data.shape)
+    # convert events to ints from strs
+    events = np.array(pd.Series(events).astype('category').cat.codes)
 
     return data, events
 
@@ -166,9 +136,12 @@ def read_data(project, max_rows):
 # main function
 def main():
 
+    # time script
+    start_time = time.time()
+
     # PARAMETERS TO CHANGE ###
-    project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'    # path to main directory
-    max_rows = 121274   # max # rows to impute all data to same size, do not pad if 0
+    project = '/home/scullydm/DoDHandsFree/'    # path to main directory
+    max_rows = 0   # 121456 max # rows to impute all data to same size, do not pad if 0 when already imputed
 
     # PREPROCESSING DATA ###
     data_combined, events_all = read_data(project, max_rows)
@@ -181,38 +154,85 @@ def main():
 
     # SET UP NEURAL NETWORK ###
 
-    # Set up CNN hyperparameters
-    global batch_size, num_epochs, learning_rate, num_classes, dropout
-    batch_size = 8     # 32, 64, 128, 256, 512
-    num_epochs = 12
-    learning_rate = 0.001   # learning rate - investigate impact
-    num_classes = len(np.unique(events_all))     # classes
-    dropout = 0.01  # Dropout, probability to drop a unit
+    # Training Parameters
+    global height, width
+    height = x_train.shape[1]
+    width = x_train.shape[2]
+    learning_rate = 0.001
+    num_steps = 100     # 500
+    batch_size = 128      # 64
+    display_step = 10
 
-    # Set up hyperparameters
-    n_batches = math.ceil(x_train.shape[0] / batch_size)
-    iterations = n_batches * num_epochs
+    # use GPU if available
+    # with tf.device('/device:GPU:0'):
+
+    # Network Parameters
+    num_input = int(height * width)     # data input (img shape: rows x cols)
+    num_classes = len(np.unique(events_all))    # total classes
+    dropout = 0.75  # Dropout, probability to keep units
+
+    # tf Graph input
+    X = tf.placeholder(tf.float32, [None, num_input])
+    Y = tf.placeholder(tf.float32, [None, num_classes])
+    keep_prob = tf.placeholder(tf.float32)  # dropout (keep probability)
+
+    # Construct model
+    logits = conv_net(X, keep_prob, num_classes)
+    prediction = tf.nn.softmax(logits)
+
+    # Define loss and optimizer
+    loss_op = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(
+        logits=logits, labels=Y))
+    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    train_op = optimizer.minimize(loss_op)
+
+    # Evaluate model
+    correct_pred = tf.equal(tf.argmax(prediction, 1), tf.argmax(Y, 1))
+    accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
+
+    # Initialize the variables (i.e. assign their default value)
+    init = tf.global_variables_initializer()
 
     # RUN NEURAL NETWORK ###
 
-    # Build the Estimator
-    model = tf.estimator.Estimator(model_fn)
+    # Start training
+    with tf.Session() as sess:
 
-    # Define the input function for training
-    input_train = tf.estimator.inputs.numpy_input_fn(x={'images': x_train}, y=y_train, \
-        batch_size=batch_size, num_epochs=num_epochs, shuffle=True)
+        # Run the initializer
+        sess.run(init)
 
-    # Train the Model
-    model.train(input_train, steps=None)
+        # randomize batch
+        for step in range(1, num_steps + 1):
+            print("Training Step: " + str(step))
+            rand_order = list(range(0, batch_size, 1))
+            random.shuffle(rand_order)
+            batch_x = np.reshape(x_train[rand_order, :, :], [batch_size, height * width])
+            batch_y = np.zeros((batch_size, num_classes))
+            batch_y[np.arange(batch_size), y_train[rand_order]] = 1
 
-    # Evaluate the Model - Define the input function for evaluating
-    input_test = tf.estimator.inputs.numpy_input_fn(x={'images': x_test}, y=y_test, \
-        batch_size=batch_size, shuffle=False)
+            # Run optimization op (backprop)
+            sess.run(train_op, feed_dict={X: batch_x, Y: batch_y, keep_prob: dropout})
+            if step % display_step == 0 or step == 1:
+                # Calculate batch loss and accuracy
+                loss, acc = sess.run([loss_op, accuracy], feed_dict={X: batch_x,
+                                                                     Y: batch_y,
+                                                                     keep_prob: 1.0})
+                print("Step " + str(step) + ", Minibatch Loss= " + \
+                      "{:.4f}".format(loss) + ", Training Accuracy= " + \
+                      "{:.3f}".format(acc))
 
-    # print final results
-    e_train = model.evaluate(input_train)
-    e_test = model.evaluate(input_test)
-    print("Training Accuracy:", e_train['accuracy'])
-    print("Testing Accuracy:", e_test['accuracy'])
+        print("Optimization Finished!")
+
+        # Calculate accuracy test images
+        y_test_out = np.zeros((len(y_test), num_classes))
+        y_test_out[np.arange(len(y_test)), y_test] = 1
+        print("Testing Accuracy:", sess.run(accuracy, \
+            feed_dict={X: np.reshape(x_test, [x_test.shape[0], height * width]), \
+            Y: y_test_out, keep_prob: 1.0}))
+
+    # print timing
+    end_time = time.time()
+    print(end_time - start_time)
+
 
 main()
