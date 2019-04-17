@@ -4,22 +4,56 @@
 		<meta charset='utf-8'>
 		<title>Squares Demo</title>
 		<script type='text/javascript' src='d3.js'></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-	<body>
-	<script type='text/javascript' src='squares.js'></script>
-	<script type='text/javascript'>
-		(function() {
-			d3.csv('accuracy.csv')
-			  .then(function(p_data)  {
-				  predictions_data = p_data;
-			  })
 
-			d3.csv('probabilities.csv')
-			  .then(function(s_data)  {
-				  scores_data = s_data;
-			  })
-			.then(plot_it)
-		}());
-	</script>
+	<body>
+
+		<select id="myText" name="select" onchange="myFunction(event)">
+		    <option disabled selected>Choose Database Type</option>
+		    <option value="Green">green</option>
+		    <option value="Red">red</option>
+		    <option value="Orange">orange</option>
+		    <option value="Black">black</option>
+		</select>
+
+		<script type='text/javascript' src='squares.js'></script>
+
+		<script>
+		function myFunction(val) {
+			var x = document.getElementById("myText").value;
+
+			if (x == "Red") {
+				(function() {
+					d3.csv('accuracy.csv')
+					  .then(function(p_data)  {
+						  predictions_data = p_data;
+					  })
+
+					d3.csv('probabilities.csv')
+					  .then(function(s_data)  {
+						  scores_data = s_data;
+					  })
+					.then(plot_it)
+				}());
+			}
+
+			if (x == "Black") {
+				(function() {
+					d3.csv('cifar10_acc.csv')
+					  .then(function(p_data)  {
+						  predictions_data = p_data;
+					  })
+
+					d3.csv('cifar10_scores.csv')
+					  .then(function(s_data)  {
+						  scores_data = s_data;
+					  })
+					.then(plot_it)
+				}());
+			}
+		}
+		</script>
+
 	</body>
 </html>
