@@ -11,10 +11,10 @@
 
 		<select id="myText" name="select" onchange="myFunction(event)">
 		    <option disabled selected>Choose Database Type</option>
-		    <option value="Green">green</option>
-		    <option value="Red">red</option>
-		    <option value="Orange">orange</option>
-		    <option value="Black">black</option>
+		    <option value="All Data">all</option>
+		    <option value="Apple Watch Data">watch</option>
+		    <option value="Myo Data">myo</option>
+		    <option value="Video Data">video</option>
 		</select>
 
 		<script type='text/javascript' src='squares.js'></script>
@@ -23,7 +23,7 @@
 		function myFunction(val) {
 			var x = document.getElementById("myText").value;
 
-			if (x == "Red") {
+			if (x == "All Data") {
 				(function() {
 					d3.csv('accuracy.csv')
 					  .then(function(p_data)  {
@@ -38,7 +38,7 @@
 				}());
 			}
 
-			if (x == "Black") {
+			if (x == "Apple Watch Data") {
 				(function() {
 					d3.csv('cifar10_acc.csv')
 					  .then(function(p_data)  {

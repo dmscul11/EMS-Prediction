@@ -1,8 +1,8 @@
 {
- "name": "motion timeseries data",
+ "name": "motion timeseries data 85%",
  "children": [
   {
-   "name": "apple watch",
+   "name": "apple watch 70%",
    "children": [
     {
      "name": "left",
@@ -35,7 +35,7 @@
    ]
   },
   {
-   "name": "myo",
+   "name": "myo 80%",
    "children": [
     {"name": "left", 
       "children": [
@@ -98,7 +98,7 @@
    ]
   },
   {
-   "name": "video",
+   "name": "video 75%",
    "children": [
     {
      "name": "raw",

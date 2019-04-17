@@ -230,6 +230,7 @@ def classify(y_train, s_train, y_test, s_test, scores):
         probs.append(prob_tmp)
         print(acc)
         print(probs)
+        breaking
 
     # write to csv
     acc.to_csv('accuracy.csv', sep=',', header=True, index=False)
