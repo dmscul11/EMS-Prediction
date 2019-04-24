@@ -1,0 +1,149 @@
+{'Administer IM Medication': 4, 'Administer IV Medication': 4, 'Intubation': 4, 'IV Placement': 4, 'Tie Tourniquet': 4}
+Administer IM Medication
+Administer IV Medication
+Intubation
+IV Placement
+Tie Tourniquet
+
+ Training and Test sizes:
+(300585, 9)
+(300585,)
+(300585,)
+(75147, 9)
+(75147,)
+(75147,)
+0
+(array([  1591,   3292,   5033,   7716,   9397,  10186,  11937,  13159,
+        13599,  15910,  31109,  31140,  45371,  45511,  51380,  53778,
+        62060,  63523,  66734,  69435,  70465,  74874,  75321,  79241,
+        85694, 100217, 102379, 103435, 115279, 116699, 118354, 122899,
+       125215, 126299, 131898, 133875, 138580, 139392, 144912, 145849,
+       146325, 153974, 164145, 165335, 175071, 187211, 191303, 191702,
+       192221, 198287, 202527, 218964, 219283, 221002, 225833, 226340,
+       227311, 230403, 232209, 237360, 238168, 247889, 251934, 255158,
+       257931, 265641, 268588, 268787, 270257, 275977, 276736, 277806,
+       278466, 280374, 292827, 293595, 294094, 298723, 304115, 304121,
+       304829, 307379, 310012, 315291, 317419, 323116, 335065, 340311,
+       341477, 348533, 348906, 354780, 356661, 362174, 365106, 365667,
+       368442, 371162, 375508]),)
+1
+['Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication' 'Administer IM Medication'
+ 'Administer IM Medication']
+Administer IM Medication
+['IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement' 'IV Placement'
+ 'IV Placement' 'IV Placement' 'IV Placement']
+IV Placement
+99
+99.0
+
+
+Administer IM Medication
+(array([], dtype=int64),)
+1
+1.0
+
+
+Administer IV Medication
+(array([], dtype=int64),)
+1
+1.0
+
+
+IV Placement
+(array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16,
+       17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33,
+       34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+       51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67,
+       68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84,
+       85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98]),)
+1
+1.0
+
+
+Intubation
+(array([], dtype=int64),)
+1
+1.0
+
+
+Tie Tourniquet
+(array([], dtype=int64),)
+1
+1.0
+Empty DataFrame
+Columns: [labels, pred, prob]
+Index: []
+Empty DataFrame
+Columns: [Administer IM Medication, Administer IV Medication, IV Placement, Intubation, Tie Tourniquet]
+Index: []
