@@ -277,6 +277,14 @@ function plot_it()  {
             .attr("x", function(d) { return x(d[0])+x.bandwidth()/2; })
             .attr("y", function(d) { return y(d[1])-5; })
             .attr("text-anchor", "middle");
+
+        // title
+        hGsvg.append("text")
+        	.attr("y", -32)
+        	.attr("x", 200)
+	        .attr("text-anchor", "right")
+	        .style("font-size", "18px")
+	        .text("True Classes");
         
         function mouseover(d){  // utility function to be called on mouseover.
             // filter for selected state.
@@ -318,7 +326,7 @@ function plot_it()  {
     
     // function to handle pieChart.
     function pieChart(pD){
-        var pC ={},    pieDim ={w:250, h: 250};
+        var pC ={},    pieDim ={w:250, h: 285};
         pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
                 
         // create svg for pie chart.
@@ -361,7 +369,15 @@ function plot_it()  {
             var i = d3.interpolate(this._current, a);
             this._current = i(0);
             return function(t) { return arc(i(t));    };
-        }    
+        }
+
+        // title
+        piesvg.append("text")
+        	.attr("y", -130)
+	        .attr("text-anchor", "middle")
+	        .style("font-size", "18px")
+	        .text("ML Predicted Classes");
+
         return pC;
     }
     
