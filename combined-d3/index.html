@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='en'>
+	<head>
+		<meta charset='utf-8'>
+		<title>Stacks Demo</title>
+		<script type='text/javascript' src='d3.js'></script>
+	</head>
+	<style>
+	.node {
+	  cursor: pointer;
+	}
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 1.5px;
+	}
+	.node text {
+	  font: 10px sans-serif;
+	}
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 1.5px;
+	}
+	</style>
+
+	<div id="area1"></div>
+	<div id="area2"></div>
+
+	<body>
+
+	<script type='text/javascript' src='stacks.js'></script>
+	<script type='text/javascript' src='d3.js'></script>
+	<script>
+
+		d3.csv('accuracy.csv')
+		  .then(function(p_data1)  {
+			  predictions_data1 = p_data1;
+		  })
+		d3.csv('probabilities.csv')
+		  .then(function(s_data1)  {
+			  scores_data1 = s_data1;
+		  })
+		d3.csv('cifar10_acc.csv')
+		  .then(function(p_data2)  {
+			  predictions_data2 = p_data2;
+		  })
+		d3.csv('cifar10_scores.csv')
+		  .then(function(s_data2)  {
+			  scores_data2 = s_data2;
+		  })
+		.then(plot_it)
+
+	</script>
+
+	</body>
+</html>

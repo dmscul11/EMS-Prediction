@@ -1,0 +1,153 @@
+{
+ "name": "motion timeseries data",
+ "children": [
+  {
+   "name": "apple watch",
+   "children": [
+    {
+     "name": "left",
+     "children": [
+      {"name": "x acceleration", "size": 3938},
+      {"name": "y acceleration", "size": 3812},
+      {"name": "z acceleration", "size": 6714},
+      {"name": "x rotation", "size": 3938},
+      {"name": "y rotation", "size": 3812},
+      {"name": "z rotation", "size": 6714},
+      {"name": "yaw", "size": 3938},
+      {"name": "pitch", "size": 3812},
+      {"name": "roll", "size": 6714}
+     ]
+    },
+    {
+     "name": "right",
+     "children": [
+      {"name": "x acceleration", "size": 3938},
+      {"name": "y acceleration", "size": 3812},
+      {"name": "z acceleration", "size": 6714},
+      {"name": "x rotation", "size": 3938},
+      {"name": "y rotation", "size": 3812},
+      {"name": "z rotation", "size": 6714},
+      {"name": "yaw", "size": 3938},
+      {"name": "pitch", "size": 3812},
+      {"name": "roll", "size": 6714}
+     ]
+    }
+   ]
+  },
+  {
+   "name": "myo",
+   "children": [
+    {"name": "left", 
+      "children": [
+      {"name": "emg",
+        "children": [
+          {"name": "emg 1", "size": 1983},
+          {"name": "emg 2", "size": 1983},
+          {"name": "emg 3", "size": 1983},
+          {"name": "emg 4", "size": 1983},
+          {"name": "emg 5", "size": 1983},
+          {"name": "emg 6", "size": 1983},
+          {"name": "emg 7", "size": 1983},
+          {"name": "emg 8", "size": 1983}
+        ]
+      },
+      {"name": "imu", 
+        "children": [
+          {"name": "x acceleration", "size": 3938},
+          {"name": "y acceleration", "size": 3812},
+          {"name": "z acceleration", "size": 6714},
+          {"name": "x rotation", "size": 3938},
+          {"name": "y rotation", "size": 3812},
+          {"name": "z rotation", "size": 6714},
+          {"name": "yaw", "size": 3938},
+          {"name": "pitch", "size": 3812},
+          {"name": "roll", "size": 6714}
+        ]
+      }
+     ]
+    },
+    {"name": "right",
+     "children": [
+      {"name": "emg", 
+        "children": [
+          {"name": "emg 1", "size": 1983},
+          {"name": "emg 2", "size": 1983},
+          {"name": "emg 3", "size": 1983},
+          {"name": "emg 4", "size": 1983},
+          {"name": "emg 5", "size": 1983},
+          {"name": "emg 6", "size": 1983},
+          {"name": "emg 7", "size": 1983},
+          {"name": "emg 8", "size": 1983}
+        ]
+      },
+      {"name": "imu", 
+        "children": [
+          {"name": "x acceleration", "size": 3938},
+          {"name": "y acceleration", "size": 3812},
+          {"name": "z acceleration", "size": 6714},
+          {"name": "x rotation", "size": 3938},
+          {"name": "y rotation", "size": 3812},
+          {"name": "z rotation", "size": 6714},
+          {"name": "yaw", "size": 3938},
+          {"name": "pitch", "size": 3812},
+          {"name": "roll", "size": 6714}
+        ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "video",
+   "children": [
+    {
+     "name": "raw",
+     "children": [
+      {"name": "x pixel", "size": 721},
+      {"name": "y pixel", "size": 4294}
+     ]
+    },
+    {"name": "open pose", 
+      "children": [
+        {"name": "patient space", 
+          "children": [
+            {"name": "medic left hand closest patient limb", "size": 4294},
+            {"name": "medic right hand closest patient limb", "size": 4294}
+         ]
+        },
+        {"name": "raw open pose", 
+          "children": [
+            {"name": "medic x,y positions", 
+              "children": [
+                {"name": "ankles", "size": 721},
+                {"name": "knees", "size": 721},
+                {"name": "hips", "size": 721},
+                {"name": "shoulders", "size": 721},
+                {"name": "elbows", "size": 721},
+                {"name": "wrists", "size": 721},
+                {"name": "nose", "size": 721},
+                {"name": "neck", "size": 721},
+                {"name": "ears", "size": 721}
+             ]
+            },
+            {"name": "patient x,y positions", 
+              "children": [
+                {"name": "ankles", "size": 721},
+                {"name": "knees", "size": 721},
+                {"name": "hips", "size": 721},
+                {"name": "shoulders", "size": 721},
+                {"name": "elbows", "size": 721},
+                {"name": "wrists", "size": 721},
+                {"name": "nose", "size": 721},
+                {"name": "neck", "size": 721},
+                {"name": "ears", "size": 721}
+             ]
+            }
+         ]
+        }
+     ]
+    }
+   ]
+  }
+ ]
+}

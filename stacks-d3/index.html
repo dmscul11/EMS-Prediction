@@ -30,21 +30,19 @@
 	<body>
 
 	<script type='text/javascript' src='stacks.js'></script>
-	<script src="//d3js.org/d3.v3.min.js"></script>
+	<script type='text/javascript' src='d3.js'></script>
 	<script>
 
-		(function() {
-			d3.csv('accuracy.csv')
-			  .then(function(p_data)  {
-				  predictions_data = p_data;
-			  })
+		d3.csv('accuracy.csv')
+		  .then(function(p_data)  {
+			  predictions_data = p_data;
+		  })
 
-			d3.csv('probabilities.csv')
-			  .then(function(s_data)  {
-				  scores_data = s_data;
-			  })
-			.then(plot_it)
-		}());
+		d3.csv('probabilities.csv')
+		  .then(function(s_data)  {
+			  scores_data = s_data;
+		  })
+		.then(plot_it)
 
 	</script>
 
