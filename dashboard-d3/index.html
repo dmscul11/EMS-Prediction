@@ -66,6 +66,7 @@
 
 		<script>
 
+			// initial plot all
 			d3.csv('cifar10_acc.csv')
 			  .then(function(p_data)  {
 				  predictions_data = p_data;
@@ -76,34 +77,63 @@
 			  })
 			.then(plot_it)
 
+			// on change of check boxes
 			d3.selectAll(".myCheckbox").on("change", function replot() {
 
+				// get checkboxes before resest
 				var choices = []
                 var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
+                // delete current svgs
                 var svg1 = d3.select("#area1")
                 var svg2 = d3.select("#area2")
                 svg1.selectAll("*").remove();
                 svg2.selectAll("*").remove();
 
-				d3.csv('accuracy.csv')
+                // When checkbox changes, refresh choices array with checked values
+                var checked_data = new Array()
+                for (var i = 0; i < checkboxes.length; i++) {
+                    choices.push(encodeURIComponent(checkboxes[i].value))
+                    checked_data.push(checkboxes[i].value)
+                }
+
+                // update data based on checkboxes
+                if (checked_data.includes('Watch') && checked_data.includes('Myo') && checked_data.includes('Video')) {
+                	location.reload();
+				} else if (checked_data.includes('Watch') && checked_data.includes('Myo')) {
+					var acc_file = 'accuracy.csv'
+                	var prob_file = 'probabilities.csv'
+				} else if (checked_data.includes('Watch') && checked_data.includes('Video')) {
+					var acc_file = 'accuracy.csv'
+                	var prob_file = 'probabilities.csv'
+				} else if (checked_data.includes('Myo') && checked_data.includes('Video')) {
+					var acc_file = 'accuracy.csv'
+                	var prob_file = 'probabilities.csv'
+				} else if (checked_data.includes('Watch')) {
+					var acc_file = 'accuracy.csv'
+                	var prob_file = 'probabilities.csv'
+				} else if (checked_data.includes('Myo')) {
+					var acc_file = 'accuracy.csv'
+                	var prob_file = 'probabilities.csv'
+				} else if (checked_data.includes('Video')) {
+					var acc_file = 'accuracy.csv'
+                	var prob_file = 'probabilities.csv'
+				} else {
+					location.reload();
+				}
+
+				// replot with new data
+				d3.csv(acc_file)
 				  .then(function(p_data)  {
 					  predictions_data = p_data;
 				  })
-				d3.csv('probabilities.csv')
+				d3.csv(prob_file)
 				  .then(function(s_data)  {
 					  scores_data = s_data;
 				  })
 				.then(plot_it)
 
-				// When checkbox changes, refresh choices array with checked values
-                for (var i = 0; i < checkboxes.length; i++) {
-                    choices.push(encodeURIComponent(checkboxes[i].value))
-                }
-
 			});
-
-			// d3.selectAll('.myCheckbox').property('checked', "checked")
 
 		</script>
 
