@@ -198,6 +198,23 @@ def classify(y_train, s_train, y_test, s_test, scores):
     acc = pd.DataFrame(columns=['labels', 'pred', 'prob'])
     probs = pd.DataFrame(columns=u_labels)
 
+    # remove
+    print(real_labels)
+    print(real_samps)
+    print(scores)
+    print(y_test)
+    print(s_test)
+    print(u_labels)
+    print(np.unique(real_samps))
+    print(len(real_labels))
+    print(len(real_samps))
+    print(len(y_train))
+    print(len(s_train))
+    print(len(y_test))
+    print(len(s_test))
+    print(len(scores))
+    breaking
+
     # calc label, prediction, and probs for each full sample
     for i in range(0, len(np.unique(real_samps))):
         print(i)

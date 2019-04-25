@@ -1,0 +1,45 @@
+{
+    "Data":
+    [
+        {
+            "State": "AL",
+            "freq": {"frog": 4786, "car": 1319, "deer": 249}
+        },
+        {
+            "State": "AZ",
+            "freq": {"frog": 1101, "car": 412, "deer": 674}
+        },
+        {
+            "State": "CT", 
+            "freq": {"frog": 932, "car": 2149, "deer": 418}
+        },
+        {
+            "State": "DE", 
+            "freq": {"frog": 832, "car": 1152, "deer": 1862}
+        },
+        {
+            "State": "FL",
+            "freq": {"frog": 4481, "car": 3304, "deer": 948}
+        }, 
+        {
+            "State": "GA",
+            "freq": {"frog": 1619, "car": 167, "deer": 1063}
+        },
+        {
+            "State": "IA",
+            "freq": {"frog": 1819, "car": 247, "deer": 1203}
+        },
+        {
+            "State": "IL",
+            "freq": {"frog": 4498, "car": 3852, "deer": 942}
+        },
+        {
+            "State": "IN",
+            "freq": {"frog": 797, "car": 1849, "deer": 1534}
+        },
+        {
+            "State": "KS",
+            "freq": {"frog": 162, "car": 379, "deer": 471}
+        }
+    ]
+}
