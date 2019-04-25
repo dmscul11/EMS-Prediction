@@ -15,9 +15,13 @@ function plot_it()  {
 		predictions_data.push(shuffled_data[i]);
 
 	// width, height, number of squares per bin column, number of bins
-	var width = 1750, height = 600;	// 2000, 1400
+	var width = 1700, height = 550;	// 2000, 1400
 	var chart2 = d3.select("#area1").append('svg').attr('width', width).attr('height', height);
-	var pad = 20;
+	chart2.append("rect")
+	    .attr("width", "100%")
+	    .attr("height", "100%")
+	    .attr("fill", "whitesmoke");
+	var pad = 25;
 	var actual_width = width-2*pad, actual_height = height-2*pad;
 	var squares_per_column = 5;	// 14
 	var n_bins = 15;	// 15
