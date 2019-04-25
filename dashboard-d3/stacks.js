@@ -281,10 +281,10 @@ function plot_it()  {
         // title
         hGsvg.append("text")
         	.attr("y", -32)
-        	.attr("x", 200)
+        	.attr("x", 175)
 	        .attr("text-anchor", "right")
 	        .style("font-size", "18px")
-	        .text("True Classes");
+	        .text("ML Predicted Classes");
         
         function mouseover(d){  // utility function to be called on mouseover.
             // filter for selected state.
@@ -376,7 +376,7 @@ function plot_it()  {
         	.attr("y", -130)
 	        .attr("text-anchor", "middle")
 	        .style("font-size", "18px")
-	        .text("ML Predicted Classes");
+	        .text("True Classes");
 
         return pC;
     }
