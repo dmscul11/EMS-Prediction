@@ -81,13 +81,10 @@
 				var choices = []
                 var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
 
-                var text = g.selectAll("#area1");
-                text.attr("class", "update");
-                text.enter().append("text")
-				      .attr("class", "enter")
-				    .merge(text)
-				      .text(function(d) { return d; });
-				text.exit().remove();
+                var svg1 = d3.select("#area1")
+                var svg2 = d3.select("#area2")
+                svg1.selectAll("*").remove();
+                svg2.selectAll("*").remove();
 
 				d3.csv('accuracy.csv')
 				  .then(function(p_data)  {
