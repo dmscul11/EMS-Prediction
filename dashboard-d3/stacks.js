@@ -210,23 +210,24 @@ function plot_it()  {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	var fData=[
-		{State:'AL',freq:{low:4786, mid:1319, high:249}}
-		,{State:'AZ',freq:{low:1101, mid:412, high:674}}
-		,{State:'CT',freq:{low:932, mid:2149, high:418}}
-		,{State:'DE',freq:{low:832, mid:1152, high:1862}}
-		,{State:'FL',freq:{low:4481, mid:3304, high:948}}
-		,{State:'GA',freq:{low:1619, mid:167, high:1063}}
-		,{State:'IA',freq:{low:1819, mid:247, high:1203}}
-		,{State:'IL',freq:{low:4498, mid:3852, high:942}}
-		,{State:'IN',freq:{low:797, mid:1849, high:1534}}
-		,{State:'KS',freq:{low:162, mid:379, high:471}}
+		{State:'AL',freq:{frog:4786, car:1319, deer:249}}
+		,{State:'AZ',freq:{frog:1101, car:412, deer:674}}
+		,{State:'CT',freq:{frog:932, car:2149, deer:418}}
+		,{State:'DE',freq:{frog:832, car:1152, deer:1862}}
+		,{State:'FL',freq:{frog:4481, car:3304, deer:948}}
+		,{State:'GA',freq:{frog:1619, car:167, deer:1063}}
+		,{State:'IA',freq:{frog:1819, car:247, deer:1203}}
+		,{State:'IL',freq:{frog:4498, car:3852, deer:942}}
+		,{State:'IN',freq:{frog:797, car:1849, deer:1534}}
+		,{State:'KS',freq:{frog:162, car:379, deer:471}}
 		];
 
 	var barColor = 'steelblue';
-    function segColor(c){ return {low:"#807dba", mid:"#e08214",high:"#41ab5d"}[c]; }
+    // function segColor(c){ return {low:"#807dba", mid:"#e08214", high:"#41ab5d"}[c]; }
+    function segColor(c){ return {frog:cat_scale_color(cat_to_ind[c]), car:cat_scale_color(cat_to_ind[c]), deer:cat_scale_color(cat_to_ind[c])}[c]; }
 	    
 	    // compute total for each state.
-	    fData.forEach(function(d){d.total=d.freq.low+d.freq.mid+d.freq.high;});
+	    fData.forEach(function(d){d.total=d.freq.frog+d.freq.car+d.freq.deer;});
 	    
 	    // function to handle histogram.
 	    function histoGram(fD){
@@ -406,7 +407,7 @@ function plot_it()  {
 	    }
 	    
 	    // calculate total frequency by segment for all state.
-	    var tF = ['low','mid','high'].map(function(d){ 
+	    var tF = ['frog','car','deer'].map(function(d){ 
 	        return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
 	    });    
 	    
