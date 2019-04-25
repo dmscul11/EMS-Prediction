@@ -41,17 +41,29 @@
 		  text-align: center;
 		}
 
+		input[type=checkbox] {
+		  transform: scale(1.5);
+		}.checkboxtext {
+		  /* Checkbox text */
+		  font-size: 120%;
+		  display: inline;
+		}
+
 	</style>
 
 	<body>
 
 		<div class="b">
-		<h2>Classification Probabilities</h2></div>
+		<h3>Classification Probabilities</h3></div>
 
 		<div id="area1" class="b"></div>
 
+  		<input type="checkbox" class="myCheckbox" value="Watch" id="Watch" checked="checked"/> <span class="checkboxtext">Apple Watch Data</span>
+  		<input type="checkbox" class="myCheckbox" value="Myo" id="Myo" checked="checked"/> <span class="checkboxtext">Myo Data</span>
+  		<input type="checkbox" class="myCheckbox" value="Video" id="Video" checked="checked"/> <span class="checkboxtext">Video Data</span>
+
 		<div class="b">
-		<h2>Incorrect Classification Breakdown</h2></div>
+		<h3>Incorrect Classification Breakdown</h3></div>
 
 		<div id="area2" class="b"></div>
 
@@ -66,6 +78,38 @@
 				  scores_data = s_data;
 			  })
 			.then(plot_it)
+
+			d3.selectAll(".myCheckbox").on("change", function replot() {
+
+				var choices = []
+                var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+                var text = g.selectAll("#area1");
+                text.attr("class", "update");
+                text.enter().append("text")
+				      .attr("class", "enter")
+				    .merge(text)
+				      .text(function(d) { return d; });
+				text.exit().remove();
+
+				d3.csv('accuracy.csv')
+				  .then(function(p_data)  {
+					  predictions_data = p_data;
+				  })
+				d3.csv('probabilities.csv')
+				  .then(function(s_data)  {
+					  scores_data = s_data;
+				  })
+				.then(plot_it)
+
+				// When checkbox changes, refresh choices array with checked values
+                for (var i = 0; i < checkboxes.length; i++) {
+                    choices.push(encodeURIComponent(checkboxes[i].value))
+                }
+
+			});
+
+			// d3.selectAll('.myCheckbox').property('checked', "checked")
 
 		</script>
 
