@@ -3,63 +3,53 @@
     [
         {
             "State": "Bagging",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 780, "BloodPressureCuff": 104, "CPR": 70, "CheckVitals": 27, 
+                "ChestTube": 17, "Intubation": 28, "OralAirway": 16, "PlaceIV": 8, "Tourniquet": 73, "WrapWound": 19}
         },
         {
             "State": "BloodPressureCuff",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 97, "BloodPressureCuff": 716, "CPR": 44, "CheckVitals": 41, 
+                "ChestTube": 14, "Intubation": 78, "OralAirway": 31, "PlaceIV": 14, "Tourniquet": 63, "WrapWound": 9}
         },
         {
             "State": "CPR", 
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 46, "BloodPressureCuff": 19, "CPR": 721, "CheckVitals": 9, 
+                "ChestTube": 9, "Intubation": 7, "OralAirway": 11, "PlaceIV": 2, "Tourniquet": 111, "WrapWound": 10}
         },
         {
             "State": "CheckVitals", 
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 14, "BloodPressureCuff": 15, "CPR": 11, "CheckVitals": 500, 
+                "ChestTube": 217, "Intubation": 101, "OralAirway": 80, "PlaceIV": 62, "Tourniquet": 30, "WrapWound": 117}
         },
         {
             "State": "ChestTube",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 5, "BloodPressureCuff": 6, "CPR": 4, "CheckVitals": 158, 
+                "ChestTube": 495, "Intubation": 87, "OralAirway": 58, "PlaceIV": 76, "Tourniquet": 5, "WrapWound": 34}
         }, 
         {
             "State": "Intubation",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 11, "BloodPressureCuff": 42, "CPR": 8, "CheckVitals": 45, 
+                "ChestTube": 47, "Intubation": 469, "OralAirway": 46, "PlaceIV": 18, "Tourniquet": 6, "WrapWound": 45}
         },
         {
             "State": "OralAirway",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 13, "BloodPressureCuff": 44, "CPR": 14, "CheckVitals": 80, 
+                "ChestTube": 64, "Intubation": 121, "OralAirway": 609, "PlaceIV": 71, "Tourniquet": 13, "WrapWound": 94}
         },
         {
             "State": "PlaceIV",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 10, "BloodPressureCuff": 15, "CPR": 15, "CheckVitals": 60, 
+                "ChestTube": 108, "Intubation": 55, "OralAirway": 102, "PlaceIV": 715, "Tourniquet": 32, "WrapWound": 26}
         },
         {
             "State": "Tourniquet",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 16, "BloodPressureCuff": 28, "CPR": 105, "CheckVitals": 35, 
+                "ChestTube": 13, "Intubation": 13, "OralAirway": 8, "PlaceIV": 24, "Tourniquet": 655, "WrapWound": 11}
         },
         {
             "State": "WrapWound",
-            "freq": {"Bagging": 4786, "BloodPressureCuff": 1319, "CPR": 249, 
-                "CheckVitals": 4786, "ChestTube": 1319, "Intubation": 249, 
-                "OralAirway": 4786, "PlaceIV": 1319, "Tourniquet": 249, "WrapWound": 4786}
+            "freq": {"Bagging": 8, "BloodPressureCuff": 11, "CPR": 8, "CheckVitals": 45, 
+                "ChestTube": 16, "Intubation": 41, "OralAirway": 39, "PlaceIV": 10, "Tourniquet": 12, "WrapWound": 635}
         }
     ]
 }
