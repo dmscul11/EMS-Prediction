@@ -3,18 +3,18 @@
     [
         {
             "State": "Bagging",
-            "freq": {"Bagging": 780, "BloodPressureCuff": 44, "CPR": 10, "CheckVitals": 14, 
+            "freq": {"Bagging": 512, "BloodPressureCuff": 44, "CPR": 10, "CheckVitals": 14, 
                 "ChestTube": 2, "Intubation": 14, "OralAirway": 6, "PlaceIV": 4, "Tourniquet": 21, "WrapWound": 10}
         },
         {
             "State": "BloodPressureCuff",
-            "freq": {"Bagging": 32, "BloodPressureCuff": 716, "CPR": 16, "CheckVitals": 13, 
-                "ChestTube": 4, "Intubation": 42, "OralAirway": 14, "PlaceIV": 7, "Tourniquet": 103, "WrapWound": 72}
+            "freq": {"Bagging": 32, "BloodPressureCuff": 507, "CPR": 16, "CheckVitals": 13, 
+                "ChestTube": 4, "Intubation": 42, "OralAirway": 14, "PlaceIV": 7, "Tourniquet": 255, "WrapWound": 72}
         },
         {
             "State": "CPR", 
-            "freq": {"Bagging": 12, "BloodPressureCuff": 5, "CPR": 721, "CheckVitals": 9, 
-                "ChestTube": 3, "Intubation": 7, "OralAirway": 4, "PlaceIV": 2, "Tourniquet": 36, "WrapWound": 10}
+            "freq": {"Bagging": 12, "BloodPressureCuff": 5, "CPR": 721, 
+                "CheckVitals": 9, "ChestTube": 3, "Intubation": 7, "OralAirway": 4, "PlaceIV": 2, "Tourniquet": 17, "WrapWound": 10}
         },
         {
             "State": "CheckVitals", 
@@ -24,32 +24,32 @@
         {
             "State": "ChestTube",
             "freq":  {"Bagging": 5, "BloodPressureCuff": 6, "CPR": 4, "CheckVitals": 173, 
-                "ChestTube": 495, "Intubation": 113, "OralAirway": 67, "PlaceIV": 76, "Tourniquet": 5, "WrapWound": 12}
+                "ChestTube": 495, "Intubation": 113, "OralAirway": 67, "PlaceIV": 255, "Tourniquet": 5, "WrapWound": 12}
         }, 
         {
             "State": "Intubation",
-            "freq": {"Bagging": 11, "BloodPressureCuff": 17, "CPR": 8, "CheckVitals": 53, 
-                "ChestTube": 47, "Intubation": 469, "OralAirway": 53, "PlaceIV": 54, "Tourniquet": 6, "WrapWound": 23}
+            "freq": {"Bagging": 159, "BloodPressureCuff": 17, "CPR": 8, "CheckVitals": 53, 
+                "ChestTube": 47, "Intubation": 469, "OralAirway": 53, "PlaceIV": 131, "Tourniquet": 6, "WrapWound": 23}
         },
         {
             "State": "OralAirway",
             "freq": {"Bagging": 13, "BloodPressureCuff": 24, "CPR": 5, "CheckVitals": 88, 
-                "ChestTube": 64, "Intubation": 130, "OralAirway": 609, "PlaceIV": 78, "Tourniquet": 13, "WrapWound": 27}
+                "ChestTube": 64, "Intubation": 130, "OralAirway": 609, "PlaceIV": 169, "Tourniquet": 13, "WrapWound": 27}
         },
         {
             "State": "PlaceIV",
-            "freq": {"Bagging": 50, "BloodPressureCuff": 15, "CPR": 8, "CheckVitals": 86, 
-                "ChestTube": 108, "Intubation": 66, "OralAirway": 126, "PlaceIV": 692, "Tourniquet": 8, "WrapWound": 12}
+            "freq": {"Bagging": 170, "BloodPressureCuff": 15, "CPR": 8, "CheckVitals": 86, 
+                "ChestTube": 108, "Intubation": 66, "OralAirway": 126, "PlaceIV": 346, "Tourniquet": 8, "WrapWound": 12}
         },
         {
             "State": "Tourniquet",
-            "freq": {"Bagging": 16, "BloodPressureCuff": 72, "CPR": 20, "CheckVitals": 22, 
-                "ChestTube": 1, "Intubation": 4, "OralAirway": 6, "PlaceIV": 7, "Tourniquet": 655, "WrapWound": 99}
+            "freq": {"Bagging": 16, "BloodPressureCuff": 187, "CPR": 20, "CheckVitals": 22, 
+                "ChestTube": 1, "Intubation": 4, "OralAirway": 6, "PlaceIV": 6, "Tourniquet": 396, "WrapWound": 99}
         },
         {
             "State": "WrapWound",
-            "freq": {"Bagging": 8, "BloodPressureCuff": 47, "CPR": 8, "CheckVitals": 16, 
-                "ChestTube": 4, "Intubation": 19, "OralAirway": 17, "PlaceIV": 7, "Tourniquet": 71, "WrapWound": 635}
+            "freq": {"Bagging": 8, "BloodPressureCuff": 141, "CPR": 8, "CheckVitals": 16, 
+                "ChestTube": 4, "Intubation": 19, "OralAirway": 17, "PlaceIV": 7, "Tourniquet": 197, "WrapWound": 635}
         }
     ]
 }
