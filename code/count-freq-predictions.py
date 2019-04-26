@@ -7,7 +7,7 @@ from collections import Counter
 def main():
 
     project = '/Users/deirdre/Documents/VA-ML/Project/EMS-Prediction/'    # path to main directory
-    file_name = 'data/testdata-accuracy-watch.csv'
+    file_name = 'data/Watch-accuracy.csv'
     watch_data = pd.read_csv(project + file_name, header=0, sep=',', index_col=False)
     predictions = np.array(watch_data['pred'])
     true_clasess = np.array(watch_data['gt'])
