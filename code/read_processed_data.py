@@ -181,9 +181,6 @@ def visualize(data, x_train, y_train, x_test, y_test, scores):
     pca_data['pca 1'] = principalDf
     pca_data['predicted'] = scores
     data['predicted'] = scores
-    print(scores.shape)
-    print(pca_data.shape)
-    print(pca_data.columns)
     pca_data.to_csv('PCA.csv', sep=',', header=True, index=True)
     data.to_csv('AllData.csv', sep=',', header=True, index=True)
 
@@ -195,61 +192,32 @@ def classify(y_train, s_train, y_test, s_test, scores):
     real_labels = np.hstack((y_train, y_test))
     real_samps = np.hstack((s_train, s_test))
     u_labels = np.unique(real_labels)
+    preds = pd.DataFrame(columns=['labels', 'pred', 'sample'])
     acc = pd.DataFrame(columns=['labels', 'pred', 'prob'])
     probs = pd.DataFrame(columns=u_labels)
 
-    # remove
-    print(real_labels)
-    print(real_samps)
-    print(scores)
-    print(y_test)
-    print(s_test)
-    print(u_labels)
-    print(np.unique(real_samps))
-    print(len(real_labels))
-    print(len(real_samps))
-    print(len(y_train))
-    print(len(s_train))
-    print(len(y_test))
-    print(len(s_test))
-    print(len(scores))
-    breaking
-
     # calc label, prediction, and probs for each full sample
     for i in range(0, len(np.unique(real_samps))):
-        print(i)
         idx = np.where(real_samps == i)
-        print(idx)
-        print(len(idx))
         label = real_labels[idx][0]
-        print(real_labels[idx])
-        print(label)
         c = Counter(scores[idx])
         pred, count = c.most_common()[0]
-        print(scores[idx])
-        print(pred)
-        print(count)
-        prob = float(count / len(idx))
-        print(prob)
-        acc.append([label, pred, prob])
+        prob = float(count / len(idx[0]))
+        acc.loc[len(acc), :] = [label, pred, prob]
 
         # for each possible label calc probabililty in sample
         prob_tmp = []
         for j in u_labels:
-            print('\n')
-            print(j)
             jdx = np.where(scores[idx] == j)
-            print(jdx)
-            print(len(jdx))
-            tmp = float(len(jdx) / len(idx))
-            print(tmp)
+            tmp = float(len(jdx[0]) / len(idx[0]))
             prob_tmp.append(tmp)
-        probs.append(prob_tmp)
-        print(acc)
-        print(probs)
-        breaking
+        probs.loc[len(probs), :] = prob_tmp
 
     # write to csv
+    preds['labels'] = real_labels
+    preds['pred'] = scores
+    preds['sample'] = real_samps
+    preds.to_csv('predictions.csv', sep=',', header=True, index=False)
     acc.to_csv('accuracy.csv', sep=',', header=True, index=False)
     probs.to_csv('probabilities.csv', sep=',', header=True, index=False)
 
@@ -259,15 +227,15 @@ def main():
 
     # PARAMETERS TO CHANGE ###
     project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'    # path to main directory
-    trials_threshold = 4     # 24   # min # of instances of event to include event in analysistesting = 0
+    trials_threshold = 18     # 24   # min # of instances of event to include event in analysistesting = 0
     norm = 1
     rand_numb = 13
     testing = 0
 
     # use any combination of data types but change exp/par: 'AppleWatch', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY'
     use_data = ['AppleWatch']
-    use_exp = ['E2']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
-    use_par = ['P4']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
+    use_exp = ['E1', 'E2', 'E3']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
+    use_par = ['P1', 'P2', 'P3', 'P4', 'P5']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
 
     # read in data ###
     events = count_events(project, trials_threshold, use_data, use_exp, use_par)     # use events above threshold
