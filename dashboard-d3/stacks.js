@@ -237,8 +237,8 @@ function plot_it()  {
     
     // function to handle histogram.
     function histoGram(fD){
-        var hG={},    hGDim = {t: 60, r: 0, b: 30, l: 0};
-        hGDim.w = 500 - hGDim.l - hGDim.r, 
+        var hG={},    hGDim = {t: 60, r: 0, b: 70, l: 0};
+        hGDim.w = 500 - hGDim.l - hGDim.r,
         hGDim.h = 300 - hGDim.t - hGDim.b;
             
         //create svg for histogram.
@@ -254,7 +254,10 @@ function plot_it()  {
         // Add x-axis to the histogram svg.
         hGsvg.append("g").attr("class", "x axis")
             .attr("transform", "translate(0," + hGDim.h + ")")
-            .call(d3.axisBottom().scale(x));
+            .call(d3.axisBottom().scale(x))
+	        .selectAll("text")  
+	            .style("text-anchor", "end")
+	            .attr("transform", "rotate(-45)" );
 
         // Create function for y-axis map.
         var y = d3.scaleLinear().range([hGDim.h, 0])
