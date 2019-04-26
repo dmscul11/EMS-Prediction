@@ -15,7 +15,7 @@ function plot_it()  {
 		predictions_data.push(shuffled_data[i]);
 
 	// width, height, number of squares per bin column, number of bins
-	var width = 1700, height = 550;	// 2000, 1400
+	var width = 1900, height = 550;	// 2000, 1400
 	var chart2 = d3.select("#area1").append('svg').attr('width', width).attr('height', height);
 	chart2.append("rect")
 	    .attr("width", "100%")
@@ -23,8 +23,8 @@ function plot_it()  {
 	    .attr("fill", "whitesmoke");
 	var pad = 25;
 	var actual_width = width-2*pad, actual_height = height-2*pad;
-	var squares_per_column = 5;	// 14
-	var n_bins = 15;	// 15
+	var squares_per_column = 7;	// 14
+	var n_bins = 12;	// 15
 
 	var cats = d3.set(predictions_data.map(d => d.gt)).values()
 	cats.sort()
