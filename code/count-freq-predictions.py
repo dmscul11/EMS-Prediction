@@ -15,7 +15,6 @@ def main():
 
     # loop through predicted classes
     u_classes = np.unique(true_clasess)
-    print(u_classes)
     for pc in u_classes:
 
         idx = np.where(predictions == pc)
@@ -26,6 +25,8 @@ def main():
         for tc in u_classes:
             jdx = np.where(true_class == tc)
             freq[pc][tc] = len(jdx[0])
+            # freq[pc][tc] = int(len(jdx[0]) / 2)
+            # freq[pc][tc] = int(len(jdx[0]) / 3)
 
     print(freq)
 
