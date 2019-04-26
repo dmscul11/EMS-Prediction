@@ -30,23 +30,27 @@ def count_events(project, trials_threshold, use_data, use_exp, use_par):
     for d in dirs:
 
         # get all files in dir and event name
+        use_events = ['Administer IM Medication', 'Administer IV Medication', 'Bagging', 'Blood Pressure Cuff', \
+                'Intubation', 'IO Placement', 'IV Placement', 'Oral Airway', 'Tie Tourniquet', 'Vital Checking']
         files = glob.glob(d + '/*.csv')
         event = d.split('/')[-1]
+        if (event in use_events):
 
-        # only include files in count of the data type, exp, and par
-        file_list = []
-        for f in files:
-            file = f.split('/')[-1]
-            tmp = file.split('_')
-            exp = tmp[1]
-            par = tmp[2]
+            # only include files in count of the data type, exp, and par
+            file_list = []
+            for f in files:
+                file = f.split('/')[-1]
+                tmp = file.split('_')
+                exp = tmp[1]
+                par = tmp[2]
 
-            if (exp in use_exp) and (par in use_par) and (use_data[0] in file):
-                file_list.append(f)
+                # if (exp in use_exp) and (par in use_par) and (use_data[0] in file):
+                if (exp in use_exp) and (par in use_par):
+                    file_list.append(f)
 
-        # only include events if they are above threshold
-        if len(file_list) >= trials_threshold:
-            events[event] = len(file_list)
+            # only include events if they are above threshold
+            if len(file_list) >= trials_threshold:
+                events[event] = len(file_list)
 
     print(events)
     return events
@@ -227,13 +231,13 @@ def main():
 
     # PARAMETERS TO CHANGE ###
     project = '/Users/deirdre/Documents/DODProject/CELA-Data/NeuralNetwork/'    # path to main directory
-    trials_threshold = 18     # 24   # min # of instances of event to include event in analysistesting = 0
+    trials_threshold = 0     # 24   # min # of instances of event to include event in analysistesting = 0
     norm = 1
     rand_numb = 13
     testing = 0
 
     # use any combination of data types but change exp/par: 'AppleWatch', 'Myo_EMG', 'Myo_IMU', 'PatientSpace', 'RawXY'
-    use_data = ['AppleWatch']
+    use_data = ['Myo_*_EMG']
     use_exp = ['E1', 'E2', 'E3']   # use any combinations of the experiments: 'E1', 'E2', 'E3'
     use_par = ['P1', 'P2', 'P3', 'P4', 'P5']  # use any combination of the participants: 'P1', 'P2', 'P3', 'P4'
 
@@ -276,9 +280,11 @@ def main():
 
         # create classifications output
         classify(y_train, s_train, y_test, s_test, scores)
+        print("Done with Classification")
 
         # create visualizations
         visualize(data, x_train, y_train, x_test, y_test, scores)
+        print("Done with Visualization")
 
 
 main()

@@ -213,25 +213,27 @@ function plot_it()  {
 	// dash 2
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	var fData=[
-		{State:'AL',freq:{frog:4786, car:1319, deer:249}}
-		,{State:'AZ',freq:{frog:1101, car:412, deer:674}}
-		,{State:'CT',freq:{frog:932, car:2149, deer:418}}
-		,{State:'DE',freq:{frog:832, car:1152, deer:1862}}
-		,{State:'FL',freq:{frog:4481, car:3304, deer:948}}
-		,{State:'GA',freq:{frog:1619, car:167, deer:1063}}
-		,{State:'IA',freq:{frog:1819, car:247, deer:1203}}
-		,{State:'IL',freq:{frog:4498, car:3852, deer:942}}
-		,{State:'IN',freq:{frog:797, car:1849, deer:1534}}
-		,{State:'KS',freq:{frog:162, car:379, deer:471}}
-		];
+	// var fData=[
+	// 	{State:'AL',freq:{frog:4786, car:1319, deer:249}}
+	// 	,{State:'AZ',freq:{frog:1101, car:412, deer:674}}
+	// 	,{State:'CT',freq:{frog:932, car:2149, deer:418}}
+	// 	,{State:'DE',freq:{frog:832, car:1152, deer:1862}}
+	// 	,{State:'FL',freq:{frog:4481, car:3304, deer:948}}
+	// 	,{State:'GA',freq:{frog:1619, car:167, deer:1063}}
+	// 	,{State:'IA',freq:{frog:1819, car:247, deer:1203}}
+	// 	,{State:'IL',freq:{frog:4498, car:3852, deer:942}}
+	// 	,{State:'IN',freq:{frog:797, car:1849, deer:1534}}
+	// 	,{State:'KS',freq:{frog:162, car:379, deer:471}}
+	// 	];
+	// ["Bagging", "BloodPressureCuff", "CPR", "CheckVitals", "ChestTube", "Intubation", "OralAirway", "PlaceIV", "Tourniquet", "WrapWound"]
 
 	var barColor = 'steelblue';
     // function segColor(c){ return {low:"#807dba", mid:"#e08214", high:"#41ab5d"}[c]; }
-    function segColor(c){ return {frog:cat_scale_color(cat_to_ind[c]), car:cat_scale_color(cat_to_ind[c]), deer:cat_scale_color(cat_to_ind[c])}[c]; }
+    function segColor(c){ return {Bagging:cat_scale_color(cat_to_ind[c]), BloodPressureCuff:cat_scale_color(cat_to_ind[c]), CPR:cat_scale_color(cat_to_ind[c]), CheckVitals:cat_scale_color(cat_to_ind[c]), ChestTube:cat_scale_color(cat_to_ind[c]), Intubation:cat_scale_color(cat_to_ind[c]), OralAirway:cat_scale_color(cat_to_ind[c]), PlaceIV:cat_scale_color(cat_to_ind[c]), Tourniquet:cat_scale_color(cat_to_ind[c]), WrapWound:cat_scale_color(cat_to_ind[c])}[c]; }
 	    
     // compute total for each state.
-    fData.forEach(function(d){d.total=d.freq.frog+d.freq.car+d.freq.deer;});
+    fData.Data.forEach(function(d){d.total=d.freq.Bagging+d.freq.BloodPressureCuff+d.freq.CPR+d.freq.CheckVitals+d.freq.ChestTube+d.freq.Intubation+d.freq.OralAirway+d.freq.PlaceIV+d.freq.Tourniquet+d.freq.WrapWound ;});
+    // fData.forEach(function(d){d.total=d.freq.frog+d.freq.car+d.freq.deer;});
     
     // function to handle histogram.
     function histoGram(fD){
@@ -288,7 +290,7 @@ function plot_it()  {
         
         function mouseover(d){  // utility function to be called on mouseover.
             // filter for selected state.
-            var st = fData.filter(function(s){ return s.State == d[0];})[0],
+            var st = fData.Data.filter(function(s){ return s.State == d[0];})[0],
                 nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
                
             // call update functions of pie-chart and legend.    
@@ -354,13 +356,13 @@ function plot_it()  {
         // Utility function to be called on mouseover a pie slice.
         function mouseover(d){
             // call the update function of histogram with new data.
-            hG.update(fData.map(function(v){ 
+            hG.update(fData.Data.map(function(v){ 
                 return [v.State,v.freq[d.data.type]];}),segColor(d.data.type));
         }
         //Utility function to be called on mouseout a pie slice.
         function mouseout(d){
             // call the update function of histogram with all data.
-            hG.update(fData.map(function(v){
+            hG.update(fData.Data.map(function(v){
                 return [v.State,v.total];}), barColor);
         }
         // Animating the pie-slice requiring a custom function which specifies
@@ -427,12 +429,12 @@ function plot_it()  {
     }
     
     // calculate total frequency by segment for all state.
-    var tF = ['frog','car','deer'].map(function(d){ 
-        return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
+    var tF = ["Bagging", "BloodPressureCuff", "CPR", "CheckVitals", "ChestTube", "Intubation", "OralAirway", "PlaceIV", "Tourniquet", "WrapWound"].map(function(d){ 
+        return {type:d, freq: d3.sum(fData.Data.map(function(t){ return t.freq[d];}))}; 
     });    
     
     // calculate total frequency by state for all segment.
-    var sF = fData.map(function(d){return [d.State,d.total];});
+    var sF = fData.Data.map(function(d){return [d.State,d.total];});
 
     var hG = histoGram(sF), // create the histogram.
         pC = pieChart(tF), // create the pie-chart.
