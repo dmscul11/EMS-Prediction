@@ -9,6 +9,7 @@ EMS Motion Data Visual Analytics
 USAGE INFORMATION:
 
 Versions: python v3.6.3, D3 v5.9.2, safari v12.1, chrome v73
+
 Report: VAML_Project_Report.pdf
 
 1) Download /dashboard-d3 entire directory ONLY (this includes the data in it)
