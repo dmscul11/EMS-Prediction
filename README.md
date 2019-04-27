@@ -1,6 +1,27 @@
 # EMS-Prediction
 EMS Motion Data Visual Analytics
 
+
+########################################################################################
+########################################################################################
+########################################################################################
+
+USAGE INFORMATION:
+
+Versions: python v3.6.3, D3 v5.9.2, safari v12.1, chrome v73
+
+1) download /dashboard-d3 entire directory ONLY (this includes the data in it)
+2) in terminal navigate into /dashboard-d3 directory
+3) execute: python3 -m http.server
+3) using either safari or google chrome navigate to: http://0.0.0.0:8000/
+4) click and interacte with dashboard
+
+########################################################################################
+########################################################################################
+########################################################################################
+
+
+
 GitHub: https://github.com/dmscul11/EMS-Prediction
 
 Box for Original Data: https://vanderbilt.app.box.com/folder/66875332205
@@ -11,25 +32,6 @@ http://0.0.0.0:8000/
 Tinker for CNN: /home/scullydm/DoDHandsFree/
     (use python3.6, pip3.6): nohup python3.6 combined_NN.py &
 
-
-
-########################################################################################
-########################################################################################
-########################################################################################
-
-USAGE INFORMATION:
-
-Versions: python v3.6.3, D3 v5.9.2, safari v12.1, chrome v73
-
-1) download /dashboard-d3 entire directory only
-2) in terminal navigate into /dashboard-d3 directory
-3) execute: python3 -m http.server
-3) using either safari or google chrome navigate to: http://0.0.0.0:8000/
-4) click + interacte with dashboard
-
-########################################################################################
-########################################################################################
-########################################################################################
 
 
 combined-d3:
