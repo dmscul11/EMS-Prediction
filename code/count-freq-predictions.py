@@ -7,7 +7,7 @@ from collections import Counter
 def main():
 
     project = '/Users/deirdre/Documents/VA-ML/Project/EMS-Prediction/'    # path to main directory
-    file_name = 'data/Watch-accuracy.csv'
+    file_name = 'data/All-accuracy.csv'
     watch_data = pd.read_csv(project + file_name, header=0, sep=',', index_col=False)
     predictions = np.array(watch_data['pred'])
     true_clasess = np.array(watch_data['gt'])
@@ -24,9 +24,9 @@ def main():
         # find true classes dist
         for tc in u_classes:
             jdx = np.where(true_class == tc)
-            freq[pc][tc] = len(jdx[0])
+            # freq[pc][tc] = len(jdx[0])
             # freq[pc][tc] = int(len(jdx[0]) / 2)
-            # freq[pc][tc] = int(len(jdx[0]) / 3)
+            freq[pc][tc] = int(len(jdx[0]) / 3)
 
     print(freq)
 
