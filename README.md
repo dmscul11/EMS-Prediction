@@ -9,12 +9,14 @@ EMS Motion Data Visual Analytics
 USAGE INFORMATION:
 
 Versions: python v3.6.3, D3 v5.9.2, safari v12.1, chrome v73
+Report: VAML_Project_Report.pdf
 
-1) download /dashboard-d3 entire directory ONLY (this includes the data in it)
-2) in terminal navigate into /dashboard-d3 directory
-3) execute: python3 -m http.server
-3) using either safari or google chrome navigate to: http://0.0.0.0:8000/
-4) click and interacte with dashboard
+1) Download /dashboard-d3 entire directory ONLY (this includes the data in it)
+2) In terminal navigate into /dashboard-d3 directory
+3) Execute: python3 -m http.server
+4) Open either safari or google chrome and clear cache
+5) In broser navigate to: http://0.0.0.0:8000/
+6) Click and interacte with dashboard
 
 ########################################################################################
 ########################################################################################
